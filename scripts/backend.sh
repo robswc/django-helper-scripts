@@ -47,4 +47,15 @@ echo "MIDDLEWARE += ['corsheaders.middleware.CorsMiddleware', 'django.middleware
 echo "MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']" >>"${project_name}"/settings.py
 echo 'STATIC_ROOT = BASE_DIR / "staticfiles"' >>"${project_name}"/settings.py
 echo "CORS_ALLOWED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000']" >>"${project_name}"/settings.py
+
+# modify urls.py file to add necessary additions
+echo "Modifying urls.py file..."
+
+sed -i 's/from django.urls import path/from django.urls import path \nfrom drf_yasg.views import get_schema_view \nfrom drf_yasg import openapi \nfrom rest_framework import permissions/' "${project_name}"/urls.py
+sed -i '/from rest_framework import permissions/a schema_view = get_schema_view( \n   openapi.Info( \n      title="API", \n      default_version="v1", \n      description="API", \n      terms_of_service="https://www.google.com/policies/terms/", \n      contact=openapi.Contact(email=""),), \n   public=True, \n   permission_classes=[permissions.AllowAny])' "${project_name}"/urls.py
+sed -i 's/from django.urls import path/from django.urls import path, re_path/' "${project_name}"/urls.py
+
+# add swagger urls
+sed -i '/urlpatterns = \[/a re_path(r"^swagger(?P<format>\.json|\.yaml)$", schema_view.without_ui(cache_timeout=0), name="schema-json"), \nre_path(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"), \nre_path(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),' "${project_name}"/urls.py
+
 echo "Finished..."
