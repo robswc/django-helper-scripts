@@ -46,5 +46,5 @@ echo "INSTALLED_APPS += ['drf_yasg', 'corsheaders']" >>"${project_name}"/setting
 echo "MIDDLEWARE += ['corsheaders.middleware.CorsMiddleware', 'django.middleware.common.CommonMiddleware']" >>"${project_name}"/settings.py
 echo "MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']" >>"${project_name}"/settings.py
 echo 'STATIC_ROOT = BASE_DIR / "staticfiles"' >>"${project_name}"/settings.py
-echo "CORS_ALLOWED_ORIGINS = ['http://localhost:5000']" >>"${project_name}"/settings.py
+echo "CORS_ALLOWED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000']" >>"${project_name}"/settings.py
 echo "Finished..."
