@@ -1,6 +1,10 @@
 #!/bin/bash
 version="1.0.0"
-name="setup_backend.sh"
+name="backend.sh"
+
+# Sets up an existing Django project with common backend add-ons
+
+python_packages="djangorestframework django-cors-headers drf-yasg whitenoise"
 
 # check if python is installed
 if ! command -v python &>/dev/null; then
@@ -18,7 +22,6 @@ if [ -z "$project_name" ]; then
 fi
 
 # Install packages using pip
-python_packages="djangorestframework django-cors-headers drf-yasg whitenoise"
 pip install $python_packages
 
 # check to see if file exists
